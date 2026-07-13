@@ -1,0 +1,21 @@
+{
+  "substitutes": {
+    "milk": ["oat milk", "almond milk", "soy milk", "coconut milk"],
+    "butter": ["margarine", "ghee", "coconut oil", "olive oil"],
+    "eggs": ["flax egg", "banana (mashed)", "applesauce", "yogurt"],
+    "cheese": ["nutritional yeast", "tofu", "vegan cheese"],
+    "sugar": ["honey", "maple syrup", "stevia", "jaggery"],
+    "flour": ["almond flour", "oat flour", "coconut flour", "whole wheat flour"],
+    "rice": ["quinoa", "cauliflower rice", "couscous", "barley"],
+    "pasta": ["zucchini noodles", "shirataki noodles", "rice noodles", "lentil pasta"],
+    "cream": ["coconut cream", "cashew cream", "evaporated milk"],
+    "yogurt": ["coconut yogurt", "soy yogurt", "kefir"],
+    "bread": ["tortilla", "rice cakes", "lettuce wrap", "oats"],
+    "chicken": ["tofu", "chickpeas", "tempeh", "mushroom"],
+    "beef": ["lentils", "mushroom", "jackfruit", "plant-based patty"],
+    "oil": ["applesauce", "mashed banana", "yogurt", "broth"],
+    "coffee": ["tea", "chicory", "matcha", "decaf coffee"],
+    "soda": ["sparkling water", "infused water", "kombucha"],
+    "salt": ["soy sauce", "lemon juice", "herbs", " nutritional yeast"]
+  }
+}

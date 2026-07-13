@@ -1,0 +1,82 @@
+{
+  "seasonal": {
+    "1": [
+      {"name": "oranges", "reason": "Winter citrus is at peak sweetness."},
+      {"name": "spinach", "reason": "Cool-season leafy greens thrive in winter."},
+      {"name": "carrots", "reason": "Root vegetables store well and are in season."},
+      {"name": "grapefruit", "reason": "Citrus season continues through winter."}
+    ],
+    "2": [
+      {"name": "grapefruit", "reason": "Late citrus season."},
+      {"name": "spinach", "reason": "Still a cool-season green."},
+      {"name": "broccoli", "reason": "Cool weather keeps it crisp."},
+      {"name": "lemon", "reason": "Winter lemons are abundant."}
+    ],
+    "3": [
+      {"name": "strawberries", "reason": "Early spring berries arrive."},
+      {"name": "asparagus", "reason": "A classic spring vegetable."},
+      {"name": "peas", "reason": "Fresh spring peas appear."},
+      {"name": "spinach", "reason": "Last of the cool-season greens."}
+    ],
+    "4": [
+      {"name": "strawberries", "reason": "Peak spring strawberry season."},
+      {"name": "mango", "reason": "Early mangoes start appearing."},
+      {"name": "lettuce", "reason": "Mild weather is ideal for lettuce."},
+      {"name": "carrots", "reason": "Spring carrots are sweet."}
+    ],
+    "5": [
+      {"name": "mango", "reason": "Mango season ramps up."},
+      {"name": "cherries", "reason": "Cherry season begins."},
+      {"name": "cucumber", "reason": "Warm-weather cucumbers thrive."},
+      {"name": "tomatoes", "reason": "Early summer tomatoes."}
+    ],
+    "6": [
+      {"name": "mango", "reason": "Peak mango season."},
+      {"name": "watermelon", "reason": "Summer melons are at their best."},
+      {"name": "tomatoes", "reason": "High summer tomatoes."},
+      {"name": "peaches", "reason": "Stone-fruit season starts."},
+      {"name": "corn", "reason": "Sweet corn is in season."}
+    ],
+    "7": [
+      {"name": "watermelon", "reason": "Mid-summer melons."},
+      {"name": "peaches", "reason": "Peak stone fruit."},
+      {"name": "corn", "reason": "Sweet corn abundance."},
+      {"name": "cucumber", "reason": "Hot-weather cucumbers."},
+      {"name": "berries", "reason": "Blueberries and raspberries peak."}
+    ],
+    "8": [
+      {"name": "watermelon", "reason": "Late-summer melons."},
+      {"name": "peaches", "reason": "End of stone-fruit season."},
+      {"name": "tomatoes", "reason": "Late-summer tomatoes are best."},
+      {"name": "grapes", "reason": "Grape harvest begins."},
+      {"name": "zucchini", "reason": "Summer squash is plentiful."}
+    ],
+    "9": [
+      {"name": "apples", "reason": "New apple crop arrives."},
+      {"name": "grapes", "reason": "Peak grape harvest."},
+      {"name": "pumpkin", "reason": "Fall squash season begins."},
+      {"name": "pears", "reason": "Autumn pears ripen."},
+      {"name": "eggplant", "reason": "Late-season nightshades."}
+    ],
+    "10": [
+      {"name": "apples", "reason": "Peak apple season."},
+      {"name": "pumpkin", "reason": "Halloween pumpkins."},
+      {"name": "pears", "reason": "Autumn pear harvest."},
+      {"name": "sweet potato", "reason": "Fall root vegetables."},
+      {"name": "broccoli", "reason": "Cooler weather returns."}
+    ],
+    "11": [
+      {"name": "apples", "reason": "Late apple varieties."},
+      {"name": "sweet potato", "reason": "Root vegetable season."},
+      {"name": "cranberries", "reason": "Cranberry harvest."},
+      {"name": "spinach", "reason": "Cool-season greens return."},
+      {"name": "brussels sprouts", "reason": "Cold-weather sprouts."}
+    ],
+    "12": [
+      {"name": "oranges", "reason": "Winter citrus begins."},
+      {"name": "cranberries", "reason": "Holiday cranberries."},
+      {"name": "pomegranate", "reason": "Winter pomegranates."},
+      {"name": "sweet potato", "reason": "Holiday root vegetables."}
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "pairings": {
+    "bread": ["butter", "cheese", "jam", "eggs"],
+    "milk": ["cereal", "cookies", "coffee", "tea"],
+    "coffee": ["sugar", "milk", "cream", "biscuits"],
+    "tea": ["sugar", "milk", "ginger", "biscuits"],
+    "pasta": ["tomatoes", "cheese", "sauce", "garlic"],
+    "rice": ["dal", "curry", "beans", "vegetables"],
+    "chicken": ["rice", "potatoes", "onions", "garlic"],
+    "eggs": ["bread", "salt", "pepper", "butter"],
+    "apple": ["peanut butter", "caramel", "cheese"],
+    "banana": ["milk", "oats", "peanut butter"],
+    "potato": ["onions", "oil", "salt", "cheese"],
+    "tomato": ["onions", "garlic", "cheese", "basil"],
+    "beer": ["chips", "nuts", "pretzels"],
+    "wine": ["cheese", "chocolate", "crackers"]
+  }
+}

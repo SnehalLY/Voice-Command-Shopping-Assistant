@@ -1,0 +1,16 @@
+{
+  "categories": {
+    "Dairy": ["milk", "cheese", "butter", "yogurt", "curd", "cream", "paneer", "ghee", "ice cream", "eggs", "egg"],
+    "Produce": ["apple", "apples", "banana", "bananas", "orange", "oranges", "mango", "mangoes", "tomato", "tomatoes", "potato", "potatoes", "onion", "onions", "lettuce", "spinach", "carrot", "carrots", "broccoli", "cucumber", "lemon", "lime", "avocado", "avocados", "ginger", "garlic", "cilantro", "mint", "strawberry", "strawberries", "grape", "grapes", "pear", "pears", "pepper", "peppers", "watermelon", "peach", "peaches", "corn", "berry", "berries", "pumpkin", "sweet potato", "cranberries", "cranberry", "pomegranate", "grapes", "eggplant", "brussels sprouts", "asparagus", "peas", "cherries", "cherry", "zucchini", "plum", "plums", "guava", "papaya", "pineapple"],
+    "Bakery": ["bread", "bun", "buns", "bagel", "bagels", "croissant", "croissants", "cake", "muffin", "muffins", "pastry", "pastries", "tortilla", "toast"],
+    "Beverages": ["water", "juice", "coffee", "tea", "soda", "cola", "beer", "wine", "smoothie", "lemonade", "milk shake", "shake"],
+    "Snacks": ["chips", "biscuit", "biscuits", "cookie", "cookies", "crackers", "nuts", "popcorn", "chocolate", "candy", "pretzel", "pretzels", "namkeen", "samosa"],
+    "Meat & Seafood": ["chicken", "beef", "pork", "mutton", "fish", "salmon", "shrimp", "prawns", "lamb", "bacon", "sausage", "sausages", "tuna"],
+    "Pantry": ["rice", "flour", "sugar", "salt", "oil", "dal", "lentil", "lentils", "beans", "pasta", "noodles", "sauce", "ketchup", "spices", "masala", "honey", "jam", "peanut butter", "cereal", "oats", "vinegar", "soy sauce", "mayonnaise"],
+    "Frozen": ["frozen pizza", "ice cream", "frozen vegetables", "frozen berries", "ice", "waffle", "waffles"],
+    "Household": ["soap", "detergent", "shampoo", "toilet paper", "tissue", "paper towel", "dishwasher", "cleaner", "sponge", "trash bag", "garbage bag"],
+    "Personal Care": ["toothpaste", "toothbrush", "deodorant", "lotion", "razor", "face wash", "sanitizer", "mask"],
+    "Pharmacy": ["medicine", "medication", "vitamin", "painkiller", "tablet", "syrup", "bandage"]
+  },
+  "defaultCategory": "Other"
+}

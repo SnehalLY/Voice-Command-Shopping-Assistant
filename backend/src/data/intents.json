@@ -1,0 +1,56 @@
+{
+  "intents": {
+    "add": {
+      "en": ["add", "buy", "need", "want", "get", "put", "include", "grab", "order", "take", "pick up", "insert", "new"],
+      "es": ["agregar", "añadir", "comprar", "necesito", "quiero", "tengo que comprar", "pon", "meter", "incluir", "tomar", "obtener", "pedir"],
+      "hi": ["जोड़", "खरीद", "चाहिए", "चाहिए", "लाना", "डाल", "मंगा", "रख", "लेना"]
+    },
+    "remove": {
+      "en": ["remove", "delete", "drop", "take off", "cancel", "eliminate", "uncheck", "no more", "don't need", "do not need", "stop"],
+      "es": ["quitar", "eliminar", "borrar", "sacar", "cancelar", "quitar de", "no necesito", "quita"],
+      "hi": ["हटा", "मिटा", "निकाल", "काट", "मत लाना", "रद्द"]
+    },
+    "search": {
+      "en": ["search", "find", "look for", "show", "where is", "do i have", "is there", "check", "locate"],
+      "es": ["buscar", "encontrar", "busca", "muestra", "dónde está", "tengo", "hay", "verifica", "localizar"],
+      "hi": ["खोज", "दिखा", "ढूंढ", "चेक", "है क्या"]
+    },
+    "setQuantity": {
+      "en": ["set", "change", "update", "make it", "quantity", "bump", "adjust"],
+      "es": ["poner", "cambiar", "actualizar", "ajustar", "cantidad", "haz que sean"],
+      "hi": ["सेट", "बदल", "अपडेट", "मात्रा", "रख"]
+    },
+    "clear": {
+      "en": ["clear", "empty", "reset", "wipe", "clean out", "start over"],
+      "es": ["limpiar", "vaciar", "resetear", "borrar todo"],
+      "hi": ["खाली", "साफ", "रीसेट", "खाली करो"]
+    }
+  },
+  "units": {
+    "bottle": ["bottle", "bottles", "botella", "botellas"],
+    "pack": ["pack", "packs", "packet", "paquete", "paquetes"],
+    "kg": ["kg", "kilo", "kilos", "kilogram", "kilograms", "किलो"],
+    "gram": ["gram", "grams", "gm", "g", "ग्राम"],
+    "liter": ["liter", "litre", "liters", "litres", "l", "लीटर"],
+    "dozen": ["dozen", "dozens", "docena", "docenas"],
+    "piece": ["piece", "pieces", "pcs", "pc", "टुकड़ा", "पीस"],
+    "can": ["can", "cans", "lata", "latas"],
+    "box": ["box", "boxes", "caja", "cajas"],
+    "bag": ["bag", "bags", "bolsa", "bolsas"]
+  },
+  "connectors": {
+    "en": ["of", "some", "a", "an", "the", "my", "from", "to", "list", "me", "please", "i", "for", "with"],
+    "es": ["de", "un", "una", "unos", "unas", "el", "la", "los", "las", "mi", "lista", "por", "favor", "para", "con", "quiero", "necesito"],
+    "hi": ["का", "की", "के", "मेरा", "सूची", "से", "मुझे", "कृपया", "का", "में"]
+  },
+  "priceTriggers": {
+    "en": ["under", "below", "cheaper than", "less than", "max", "maximum", "within", "budget"],
+    "es": ["menos de", "bajo", "máximo", "hasta", "por debajo de"],
+    "hi": ["से कम", "नीचे", "अधिकतम"]
+  },
+  "brandTriggers": {
+    "en": ["brand", "by", "from brand", "make it"],
+    "es": ["marca", "de la marca"],
+    "hi": ["ब्रांड", "की"]
+  }
+}

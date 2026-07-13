@@ -1,0 +1,20 @@
+# Render deployment config for the backend API.
+# Deploy: connect this repo, set "Root Directory" to backend, build = npm install,
+# start = npm start. Add the env vars below in the Render dashboard.
+services:
+  - type: web
+    name: voice-shopping-api
+    runtime: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 4000
+      - key: ALLOWED_ORIGIN
+        sync: false # set to your frontend URL, e.g. https://voice-shopping.vercel.app
+      # DB_PATH defaults to ./data-store/shopping.db (ephemeral on free tier —
+      # acceptable for a demo; use a disk or hosted DB for persistent data).
