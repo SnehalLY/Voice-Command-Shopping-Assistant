@@ -8,6 +8,7 @@ all without any paid APIs or LLMs.
 
 Built for the Voice Command Shopping Assistant technical assessment, scoped to
 fit the 8-hour time budget while covering every listed requirement.
+Live demo: https://agent-6a573d913cf8510c99--fabulous-sorbet-f8c045.netlify.app/
 
 ## Requirements coverage
 
