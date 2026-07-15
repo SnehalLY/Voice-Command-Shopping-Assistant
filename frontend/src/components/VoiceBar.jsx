@@ -1,12 +1,12 @@
 import { useState } from 'react';
+import Icon from './Icons.jsx';
+import { LANGUAGES } from '../lib/languages.js';
 
 /**
- * VoiceBar — the mic control + live transcript + manual text fallback.
- *
- * Shows a clear listening state (animated pulse), the interim recognized text,
- * and surfaces microphone errors (permission denied, no-speech, etc.) so the
- * user always knows what's happening. When speech isn't available, the manual
- * input is the primary path.
+ * VoiceBar — the central mic control with live waveform animation, the real-time
+ * transcript bubble, an action-confirmation line, a speech-language selector, and
+ * a manual text fallback. Mirrors the polished voice card from the reference UI
+ * while staying wired to the backend command loop (onTextSubmit).
  */
 export default function VoiceBar({
   supported,
@@ -17,6 +17,10 @@ export default function VoiceBar({
   onStart,
   onStop,
   onTextSubmit,
+  languageCode,
+  onLanguageChange,
+  engineStatus = 'Ready (Backend Engine)',
+  confirmation = null,
   examples = [],
 }) {
   const [text, setText] = useState('');
@@ -39,66 +43,143 @@ export default function VoiceBar({
   };
   const errorText = error ? errorMessages[error] || `Speech error: ${error}` : null;
 
+  const heardText =
+    interim || transcript
+      ? `"${interim || transcript}"`
+      : listening
+        ? 'Listening now… speak your command.'
+        : 'Tap the microphone above to start speaking…';
+
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-      <div className="flex flex-col items-center gap-3 sm:flex-row sm:items-center">
+    <div className="relative flex flex-col items-center overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 text-center shadow-sm dark:border-slate-700/60 dark:bg-slate-800">
+      <div className="absolute right-3 top-3 flex items-center gap-1 rounded-full bg-slate-100 py-1 pl-2 pr-2.5 dark:bg-slate-700">
+        <span
+          className={`h-2.5 w-2.5 rounded-full ${
+            listening ? 'animate-pulse bg-emerald-500' : 'bg-emerald-500'
+          }`}
+        />
+        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">
+          {listening ? 'Listening…' : engineStatus}
+        </span>
+      </div>
+
+      <h2 className="mt-2 mb-1 text-lg font-bold text-slate-800 dark:text-slate-100">Voice Assistant</h2>
+      <p className="mb-6 max-w-[240px] text-xs text-slate-400">
+        Tap the microphone and instruct in natural speech.
+      </p>
+
+      <div className="relative mb-6 flex items-center justify-center">
         <button
           type="button"
           onClick={listening ? onStop : onStart}
           disabled={!supported}
           aria-label={listening ? 'Stop listening' : 'Start listening'}
-          className={`relative flex h-16 w-16 items-center justify-center rounded-full text-white transition ${
-            listening
-              ? 'bg-red-500 hover:bg-red-600'
-              : 'bg-brand-600 hover:bg-brand-700 disabled:cursor-not-allowed disabled:bg-slate-300'
-          }`}
+          className={`mic-active-hover relative z-10 flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-tr from-emerald-500 to-green-400 text-white shadow-xl shadow-emerald-500/30 transition-all duration-300 hover:scale-105 active:scale-95 ${
+            listening ? 'mic-active' : ''
+          } ${!supported ? 'cursor-not-allowed opacity-50' : ''}`}
         >
           {listening && (
-            <span className="absolute inset-0 rounded-full bg-red-400 animate-pulse-ring" />
+            <>
+              <span className="absolute h-28 w-28 animate-pulse-ring rounded-full border-2 border-emerald-500/20" />
+              <span className="absolute h-36 w-36 animate-pulse-ring rounded-full border border-emerald-500/10" />
+            </>
           )}
-          <MicIcon className="relative h-7 w-7" />
+          <Icon name="mic" className="h-10 w-10" />
         </button>
-
-        <div className="flex-1 text-center sm:text-left">
-          <div className="text-sm font-medium text-slate-700">
-            {listening ? 'Listening… speak now' : supported ? 'Tap the mic and speak a command' : 'Voice not supported — type below'}
-          </div>
-          <div className="mt-1 min-h-[1.5rem] text-slate-500">
-            {interim && <span className="italic">{interim}</span>}
-            {!interim && transcript && <span className="text-slate-700">{transcript}</span>}
-            {!interim && !transcript && !listening && (
-              <span className="text-xs">e.g. “Add milk”, “I need 3 apples”, “Remove bread”</span>
-            )}
-          </div>
-        </div>
       </div>
 
-      <form onSubmit={submitText} className="mt-3 flex gap-2">
+      {/* Real-time waveform */}
+      <div className={`mb-4 flex h-8 items-center justify-center ${listening ? 'mic-listening' : ''}`}>
+        <span className="wave" />
+        <span className="wave" />
+        <span className="wave" />
+        <span className="wave" />
+        <span className="wave" />
+      </div>
+
+      {/* Live transcript + confirmation */}
+      <div className="flex min-h-[90px] w-full flex-col justify-between rounded-2xl border border-slate-100 bg-slate-50 p-4 text-left dark:border-slate-700/40 dark:bg-slate-900/60">
+        <div>
+          <div className="mb-1 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+            Heard Transcript:
+          </div>
+          <p
+            className={`text-sm font-medium ${
+              interim || transcript
+                ? 'not-italic text-slate-700 dark:text-white'
+                : 'italic text-slate-500 dark:text-slate-300'
+            }`}
+          >
+            {heardText}
+          </p>
+        </div>
+        {confirmation && (
+          <div className="mt-2 flex items-center gap-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
+            <Icon name="check-circle" className="h-3.5 w-3.5" />
+            <span>{confirmation}</span>
+          </div>
+        )}
+      </div>
+
+      {/* Manual command fallback */}
+      <form onSubmit={submitText} className="mt-4 flex w-full gap-2">
         <input
           type="text"
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder="Or type a command…"
-          className="flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+          placeholder={supported ? 'Or type a command…' : 'Type a command (voice unsupported)…'}
+          className="flex-1 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm outline-none transition-all focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-slate-700/80 dark:bg-slate-900 dark:text-slate-100"
         />
         <button
           type="submit"
-          className="rounded-lg bg-brand-600 px-4 py-2 text-sm font-medium text-white hover:bg-brand-700"
+          className="rounded-2xl bg-emerald-500 px-4 py-2.5 text-sm font-bold text-white shadow-lg shadow-emerald-500/15 transition-all hover:bg-emerald-600 active:scale-95"
         >
           Send
         </button>
       </form>
 
+      {/* Language selector — prominent so multilingual support is demonstrable */}
+      <div className="mt-4 w-full rounded-2xl border border-slate-200 bg-slate-50 p-3 dark:border-slate-700 dark:bg-slate-900">
+        <div className="flex items-center justify-between gap-2">
+          <span className="flex items-center gap-1.5 text-xs font-bold text-slate-600 dark:text-slate-300">
+            <Icon name="languages" className="h-4 w-4 text-emerald-500" />
+            Speech Language
+          </span>
+          <select
+            value={languageCode}
+            onChange={(e) => onLanguageChange(e.target.value)}
+            className="cursor-pointer rounded-lg border border-slate-200 bg-white py-1.5 pl-3 pr-8 text-xs font-bold text-slate-700 outline-none focus:border-emerald-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
+          >
+            {LANGUAGES.map((lang) => (
+              <option key={lang.code} value={lang.code}>
+                {lang.label}
+              </option>
+            ))}
+          </select>
+        </div>
+        <p className="mt-1.5 text-[10px] text-slate-400 dark:text-slate-500">
+          Choose English, Español, or हिन्दी. The voice engine listens in the selected language.
+        </p>
+      </div>
+
       {errorText && (
-        <p className="mt-2 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{errorText}</p>
+        <p className="mt-3 w-full rounded-xl bg-red-50 px-3 py-2 text-sm text-red-700 dark:bg-red-950/40 dark:text-red-300">
+          {errorText}
+        </p>
+      )}
+
+      {!supported && (
+        <p className="mt-3 w-full rounded-xl bg-amber-50 px-3 py-2 text-xs text-amber-700 dark:bg-amber-950/40 dark:text-amber-300">
+          Speech recognition isn&apos;t supported in this browser. Use the text input above to type commands.
+        </p>
       )}
 
       {examples.length > 0 && (
-        <div className="mt-3 flex flex-wrap gap-2">
+        <div className="mt-4 flex w-full flex-wrap gap-2">
           {examples.map((ex) => (
             <span
               key={ex}
-              className="rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-600"
+              className="rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-600 dark:bg-slate-700/60 dark:text-slate-300"
             >
               {ex}
             </span>
@@ -106,16 +187,5 @@ export default function VoiceBar({
         </div>
       )}
     </div>
-  );
-}
-
-function MicIcon({ className }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
-      <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
-      <line x1="12" y1="19" x2="12" y2="23" />
-      <line x1="8" y1="23" x2="16" y2="23" />
-    </svg>
   );
 }

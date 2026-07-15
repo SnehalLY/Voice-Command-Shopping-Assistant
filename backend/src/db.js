@@ -23,6 +23,7 @@ db.exec(`
     unit TEXT,
     brand TEXT,
     max_price REAL,
+    price REAL,
     created_at TEXT NOT NULL,
     updated_at TEXT NOT NULL
   );
@@ -40,6 +41,15 @@ db.exec(`
   CREATE INDEX IF NOT EXISTS idx_history_name ON history(name);
 `);
 
+// Migration: add image_url column for cached product photos (idempotent).
+const itemColumns = db.prepare('PRAGMA table_info(items)').all().map((c) => c.name);
+if (!itemColumns.includes('image_url')) {
+  db.exec('ALTER TABLE items ADD COLUMN image_url TEXT');
+}
+if (!itemColumns.includes('price')) {
+  db.exec('ALTER TABLE items ADD COLUMN price REAL');
+}
+
 const NOW = () => new Date().toISOString();
 
 /* ----------------------------- Items CRUD ----------------------------- */
@@ -51,19 +61,38 @@ export function listItems() {
 }
 
 export function findItemByName(name) {
-  return db
+  const lower = name.toLowerCase();
+  const exact = db
     .prepare('SELECT * FROM items WHERE LOWER(name) = LOWER(?) LIMIT 1')
     .get(name);
+  if (exact) return exact;
+
+  // Basic singular/plural normalization: try stripping or adding trailing "s".
+  const variants = [lower];
+  if (lower.endsWith('s')) {
+    variants.push(lower.slice(0, -1));
+  } else {
+    variants.push(lower + 's');
+  }
+
+  for (const v of variants) {
+    const match = db
+      .prepare('SELECT * FROM items WHERE LOWER(name) = LOWER(?) LIMIT 1')
+      .get(v);
+    if (match) return match;
+  }
+
+  return null;
 }
 
-export function addItem({ name, category, quantity, unit, brand, maxPrice }) {
+export function addItem({ name, category, quantity, unit, brand, maxPrice, price, imageUrl }) {
   const now = NOW();
   const info = db
     .prepare(
-      `INSERT INTO items (name, category, quantity, unit, brand, max_price, created_at, updated_at)
-       VALUES (@name, @category, @quantity, @unit, @brand, @maxPrice, @now, @now)`
+      `INSERT INTO items (name, category, quantity, unit, brand, max_price, price, image_url, created_at, updated_at)
+       VALUES (@name, @category, @quantity, @unit, @brand, @maxPrice, @price, @imageUrl, @now, @now)`
     )
-    .run({ name, category, quantity, unit, brand, maxPrice, now });
+    .run({ name, category, quantity, unit, brand, maxPrice, price: price ?? null, imageUrl: imageUrl ?? null, now });
 
   // Log the add to history for recommendation logic.
   db.prepare(
@@ -82,11 +111,13 @@ export function updateItem(id, fields) {
     quantity: fields.quantity ?? existing.quantity,
     unit: fields.unit !== undefined ? fields.unit : existing.unit,
     brand: fields.brand !== undefined ? fields.brand : existing.brand,
-    maxPrice: fields.maxPrice !== undefined ? fields.maxPrice : existing.maxPrice,
+    maxPrice: fields.maxPrice !== undefined ? fields.maxPrice : existing.max_price,
+    price: fields.price !== undefined ? fields.price : existing.price,
+    imageUrl: fields.imageUrl !== undefined ? fields.imageUrl : existing.image_url,
   };
   db.prepare(
     `UPDATE items SET name=@name, category=@category, quantity=@quantity,
-       unit=@unit, brand=@brand, max_price=@maxPrice, updated_at=@now
+       unit=@unit, brand=@brand, max_price=@maxPrice, price=@price, image_url=@imageUrl, updated_at=@now
      WHERE id=@id`
   ).run({ ...merged, id, now: NOW() });
   return getItemById(id);

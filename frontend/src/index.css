@@ -8,10 +8,61 @@
 
 body {
   @apply bg-slate-50 text-slate-800 antialiased;
-  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 }
 
-/* Simple pulse used on the mic button while listening. */
+.dark body {
+  @apply bg-slate-900 text-slate-100;
+}
+
+/* Smooth Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #475569;
+}
+
+/* Voice waveform bars */
+.wave {
+  display: inline-block;
+  width: 4px;
+  height: 20px;
+  background-color: #10b981;
+  margin: 0 2px;
+  border-radius: 4px;
+  animation: quiet 1.2s ease-in-out infinite;
+}
+.wave:nth-child(2) { animation-delay: 0.2s; }
+.wave:nth-child(3) { animation-delay: 0.4s; }
+.wave:nth-child(4) { animation-delay: 0.6s; }
+.wave:nth-child(5) { animation-delay: 0.8s; }
+
+@keyframes bounce-mic {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+.mic-active {
+  animation: bounce-mic 1.5s ease-in-out infinite;
+}
+
+@keyframes wave-pulse {
+  0% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1.8); }
+  100% { transform: scaleY(0.3); }
+}
+.mic-listening .wave {
+  animation: wave-pulse 0.6s ease-in-out infinite;
+}
+
+/* Soft pulse ring used on the mic button while listening */
 @keyframes pulse-ring {
   0% { transform: scale(0.95); opacity: 0.7; }
   70% { transform: scale(1.25); opacity: 0; }

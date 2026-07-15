@@ -8,7 +8,7 @@ import { categorizeItem } from './categorization.js';
  * WHY RULE-BASED (not an LLM):
  *   - Deterministic: same input -> same output, easy to test and explain.
  *   - Free & fast: no API calls, no tokens, sub-millisecond, runs on the server.
- *   - Bounded domain: the command set (add/remove/search/set-quantity) is small,
+ *   - Bounded domain: the command set (add/remove/search/set-quantity/ask) is small,
  *     so a keyword + regex approach covers it well without ML overhead.
  *
  * The parser is language-aware: intent verbs, connectors and units are looked
@@ -22,12 +22,24 @@ const PRICE_TRIGGERS = intentsData.priceTriggers;
 const BRAND_TRIGGERS = intentsData.brandTriggers;
 const UNITS = intentsData.units;
 
-const INTENT_PRIORITY = ['search', 'clear', 'remove', 'setQuantity', 'add'];
+const INTENT_PRIORITY = ['search', 'clear', 'remove', 'setQuantity', 'ask', 'add'];
+
+// Intent detection log for debugging accuracy issues.
+const intentLog = [];
+
+export function getIntentLog() {
+  return intentLog.slice(-50);
+}
+
+export function clearIntentLog() {
+  intentLog.length = 0;
+}
 
 // Generic filler tokens that are never part of an item name (any language).
 const GENERIC_STOP = new Set([
   'of', 'my', 'the', 'list', 'from', 'to', 'on', 'in', 'for', 'please',
   'i', 'me', 'some', 'a', 'an', 'with', 'and', 'also', 'want', 'need', 'buy',
+  'any', 'is', 'are', 'there',
   // currency words left behind after price extraction
   'dollars', 'dollar', 'rupees', 'rupee', 'euros', 'euro', 'pesos', 'peso',
   'rs', 'inr', 'usd', 'cents', 'cent',
@@ -62,16 +74,21 @@ function buildStopSet(lang) {
   return stop;
 }
 
+function normalizeForMatch(text) {
+  return text.toLowerCase().replace(/[^\w\s\u00c0-\u024f\u0900-\u097f]/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
 function detectIntent(text, lang) {
-  const lower = text.toLowerCase();
+  const lower = normalizeForMatch(text);
   let best = null;
   let bestScore = 0;
 
   for (const intent of INTENT_PRIORITY) {
     const verbs = INTENTS[intent][lang] || [];
-    let score = 0; // count how many verb phrases match
+    let score = 0;
     for (const v of verbs) {
-      if (lower.includes(v)) score += 1;
+      const vNorm = normalizeForMatch(v);
+      if (lower.includes(vNorm)) score += 1;
     }
     if (score > bestScore) {
       bestScore = score;
@@ -79,15 +96,63 @@ function detectIntent(text, lang) {
     }
   }
 
-  // Default to "add" when no keyword matched (most utterances are adds).
-  if (!best) return { intent: 'add', matched: false, confidence: 0.6 };
-  return { intent: best, matched: true, confidence: 0.95 };
+  let confidence;
+  if (best && bestScore > 0) {
+    confidence = Math.min(0.95, 0.6 + bestScore * 0.15);
+  } else {
+    const stop = buildStopSet(lang);
+    const remainingTokens = tokenize(text).filter((t) => !stop.has(t));
+    if (remainingTokens.length <= 2) {
+      confidence = 0.5;
+    } else {
+      confidence = 0.15;
+    }
+  }
+
+  const finalIntent = best || 'add';
+  const entry = {
+    timestamp: new Date().toISOString(),
+    raw: text,
+    lang,
+    intent: finalIntent,
+    confidence,
+    matched: !!best,
+    bestScore,
+  };
+  intentLog.push(entry);
+  if (intentLog.length > 200) intentLog.splice(0, intentLog.length - 200);
+
+  if (!best || bestScore === 0) {
+    const stop = buildStopSet(lang);
+    const remainingTokens = tokenize(text).filter((t) => !stop.has(t));
+    if (remainingTokens.length > 2) {
+      return { intent: 'unknown', matched: false, confidence, needsClarification: true };
+    }
+    return { intent: 'add', matched: false, confidence };
+  }
+  return { intent: best, matched: true, confidence };
 }
 
 function extractPrice(text, lang) {
   const triggers = (PRICE_TRIGGERS[lang] || []).concat(PRICE_TRIGGERS.en || []);
   for (const t of triggers) {
     const re = new RegExp(`${escapeRegex(t)}\\s*\\$?\\s*(\\d+(?:\\.\\d+)?)`, 'i');
+    const m = text.match(re);
+    if (m) return parseFloat(m[1]);
+  }
+  return null;
+}
+
+function extractMinPrice(text, lang) {
+  const triggers = (PRICE_TRIGGERS[lang] || []).concat(PRICE_TRIGGERS.en || []);
+  const floorWords = ['over', 'above', 'more than'];
+  for (const t of triggers) {
+    const re = new RegExp(`(?:${floorWords.map(escapeRegex).join('|')})\\s+${escapeRegex(t)}\\s*\\$?\\s*(\\d+(?:\\.\\d+)?)`, 'i');
+    const m = text.match(re);
+    if (m) return parseFloat(m[1]);
+  }
+  for (const fw of floorWords) {
+    const re = new RegExp(`${escapeRegex(fw)}\\s+\\$?\\s*(\\d+(?:\\.\\d+)?)`, 'i');
     const m = text.match(re);
     if (m) return parseFloat(m[1]);
   }
@@ -156,11 +221,12 @@ export function parseCommand(text, lang = 'en') {
     };
   }
 
-  const { intent, confidence } = detectIntent(text, lang);
+  const { intent, confidence, needsClarification } = detectIntent(text, lang);
   const quantityInfo = parseQuantity(text);
   const brand = extractBrand(text, lang);
   const itemName = extractItemName(text, lang, brand);
   const maxPrice = extractPrice(text, lang);
+  const minPrice = extractMinPrice(text, lang);
 
   const entities = {
     itemName: itemName || null,
@@ -168,6 +234,7 @@ export function parseCommand(text, lang = 'en') {
     unit: quantityInfo.unit,
     brand: brand || null,
     maxPrice: maxPrice != null ? maxPrice : null,
+    minPrice: minPrice != null ? minPrice : null,
   };
 
   const category = entities.itemName ? categorizeItem(entities.itemName) : null;
@@ -178,6 +245,7 @@ export function parseCommand(text, lang = 'en') {
     category,
     confidence,
     raw: text,
+    needsClarification: needsClarification || false,
   };
 }
 

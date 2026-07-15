@@ -8,21 +8,21 @@ export const LANGUAGES = [
     label: 'English',
     speechCode: 'en-US',
     parseLang: 'en',
-    examples: ['Add milk', 'I need 3 apples', 'Remove bread', 'Search cheese'],
+    examples: ['Add milk', 'I need 3 apples', 'Remove bread', 'Search cheese', 'What\'s seasonal', 'Suggestions'],
   },
   {
     code: 'es',
     label: 'Español',
     speechCode: 'es-ES',
     parseLang: 'es',
-    examples: ['Agregar leche', 'Quiero comprar dos botellas de agua', 'Quitar pan'],
+    examples: ['Agregar leche', 'Quiero comprar dos botellas de agua', 'Quitar pan', 'Qué está de temporada'],
   },
   {
     code: 'hi',
     label: 'हिन्दी',
     speechCode: 'hi-IN',
     parseLang: 'hi',
-    examples: ['दूध जोड़ें', 'सेब लाना', 'ब्रेड हटा दो'],
+    examples: ['दूध जोड़ें', 'सेब लाना', 'ब्रेड हटा दो', 'मौसमी क्या है'],
   },
 ];
 

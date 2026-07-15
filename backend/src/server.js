@@ -5,6 +5,7 @@ import { pathToFileURL } from 'url';
 import itemsRouter from './routes/items.js';
 import commandRouter from './routes/command.js';
 import suggestionsRouter from './routes/suggestions.js';
+import imageRouter from './routes/image.js';
 import { errorHandler } from './middleware/errorHandler.js';
 
 const app = express();
@@ -27,6 +28,7 @@ app.get('/api/health', (req, res) => {
 app.use('/api/items', itemsRouter);
 app.use('/api/command', commandRouter);
 app.use('/api/suggestions', suggestionsRouter);
+app.use('/api/image', imageRouter);
 
 // 404 for unknown routes.
 app.use((req, res) => {

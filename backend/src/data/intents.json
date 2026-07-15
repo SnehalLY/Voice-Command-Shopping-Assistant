@@ -1,29 +1,99 @@
 {
   "intents": {
     "add": {
-      "en": ["add", "buy", "need", "want", "get", "put", "include", "grab", "order", "take", "pick up", "insert", "new"],
-      "es": ["agregar", "añadir", "comprar", "necesito", "quiero", "tengo que comprar", "pon", "meter", "incluir", "tomar", "obtener", "pedir"],
-      "hi": ["जोड़", "खरीद", "चाहिए", "चाहिए", "लाना", "डाल", "मंगा", "रख", "लेना"]
+      "en": [
+        "add", "buy", "need", "want", "get", "put", "include", "grab", "order",
+        "take", "pick up", "insert", "new", "i'd like", "please add", "put on my list",
+        "get me", "i would like", "can you add", "let's add", "i want to buy",
+        "i need to get", "add to my list", "throw in", "grab me"
+      ],
+      "es": [
+        "agregar", "añadir", "comprar", "necesito", "quiero", "tengo que comprar",
+        "pon", "meter", "incluir", "tomar", "obtener", "pedir", "me gustaría",
+        "por favor agrega", "pon en mi lista", "consígueme", "quiero añadir",
+        "puedes agregar", "lleva", "agrega a mi lista", "trae", "me hace falta"
+      ],
+      "hi": [
+        "जोड़", "जोड़ें", "खरीद", "चाहिए", "लाना", "डाल", "डालो", "मंगा", "रख", "लेना",
+        "कृपया जोड़ें", "मेरी सूची में डालो", "लाओ", "जोड़ दो",
+        "अपनी सूची में डालो", "मिलता है", "खरीद लो", "चाहिए है"
+      ]
     },
     "remove": {
-      "en": ["remove", "delete", "drop", "take off", "cancel", "eliminate", "uncheck", "no more", "don't need", "do not need", "stop"],
-      "es": ["quitar", "eliminar", "borrar", "sacar", "cancelar", "quitar de", "no necesito", "quita"],
-      "hi": ["हटा", "मिटा", "निकाल", "काट", "मत लाना", "रद्द"]
+      "en": [
+        "remove", "delete", "drop", "take off", "cancel", "eliminate", "uncheck",
+        "no more", "don't need", "do not need", "stop", "remove from my list",
+        "take out", "i don't want", "get rid of", "cross off", "take off the list"
+      ],
+      "es": [
+        "quitar", "eliminar", "elimina", "elimino", "borrar", "sacar", "cancelar", "quitar de",
+        "no necesito", "quita", "sacar de la lista", "no quiero", "elimina de la lista",
+        "quita de mi lista", "borra de la lista"
+      ],
+      "hi": [
+        "हटा", "हटाओ", "मिटा", "निकाल", "निकाल दो", "काट", "मत लाना", "रद्द",
+        "मेरी सूची से हटाओ", "हटा दो", "निकाल दो", "मत डालो"
+      ]
     },
     "search": {
-      "en": ["search", "find", "look for", "show", "where is", "do i have", "is there", "check", "locate"],
-      "es": ["buscar", "encontrar", "busca", "muestra", "dónde está", "tengo", "hay", "verifica", "localizar"],
-      "hi": ["खोज", "दिखा", "ढूंढ", "चेक", "है क्या"]
+      "en": [
+        "search", "find", "look for", "show", "where is", "do i have", "is there",
+        "check", "locate", "look up", "do you have", "tell me if you have",
+        "search for", "find me", "show me", "look for in my list"
+      ],
+      "es": [
+        "buscar", "encontrar", "busca", "muestra", "dónde está", "tengo", "hay",
+        "verifica", "localizar", "busca en mi lista", "dime si tengo",
+        "localiza", "encuentra", "muéstrame"
+      ],
+      "hi": [
+        "खोज", "खोजो", "दिखा", "ढूंढ", "ढूंढो", "चेक", "है क्या", "मेरी सूची में खोज",
+        "बताओ", "बताओ क्या है", "दिखाओ", "तलाश"
+      ]
     },
     "setQuantity": {
-      "en": ["set", "change", "update", "make it", "quantity", "bump", "adjust"],
-      "es": ["poner", "cambiar", "actualizar", "ajustar", "cantidad", "haz que sean"],
-      "hi": ["सेट", "बदल", "अपडेट", "मात्रा", "रख"]
+      "en": [
+        "set", "change", "update", "make it", "quantity", "bump", "adjust",
+        "change the quantity", "make it", "i want", "bump to", "set to",
+        "modify the quantity", "update the quantity"
+      ],
+      "es": [
+        "poner", "cambiar", "actualizar", "ajustar", "cantidad", "haz que sean",
+        "cambia la cantidad", "modifica", "pon la cantidad", "actualiza la cantidad"
+      ],
+      "hi": [
+        "सेट", "सेट करो", "बदल", "बदलो", "अपडेट", "मात्रा", "रख", "करो",
+        "मात्रा बदलो", "इतना करो", "संख्या बदलो"
+      ]
+    },
+    "ask": {
+      "en": [
+        "what are", "what is", "which", "do you have", "tell me", "show me",
+        "what should i buy", "any suggestions", "what can i use instead",
+        "substitute for", "what's on my list", "what do i have", "what's in season",
+        "seasonal fruits", "recommend", "suggestion", "suggest",
+        "what are the seasonal", "what should i get", "what's good this week",
+        "options", "options for", "option for", "what are the options",
+        "what are options for", "show me options for", "alternatives",
+        "alternatives for", "alternatives to", "substitute", "substitutes for",
+        "swap for", "swaps for"
+      ],
+      "es": [
+        "qué son", "qué es", "cuáles", "tienes", "dime", "muéstrame",
+        "qué debería comprar", "alguna sugerencia", "qué puedo usar en lugar",
+        "sustituto de", "qué hay en mi lista", "qué tengo", "qué está de temporada",
+        "frutas de temporada", "recomienda", "sugerencia"
+      ],
+      "hi": [
+        "क्या हैं", "क्या है", "कौन सी", "बताओ", "दिखाओ",
+        "क्या मेरी सूची में है", "क्या सुझाव", "क्या खरीदूं",
+        "मौसमी फल", "सेब्स्टीट्यूट", "क्या लगाएं"
+      ]
     },
     "clear": {
-      "en": ["clear", "empty", "reset", "wipe", "clean out", "start over"],
-      "es": ["limpiar", "vaciar", "resetear", "borrar todo"],
-      "hi": ["खाली", "साफ", "रीसेट", "खाली करो"]
+      "en": ["clear", "empty", "reset", "wipe", "clean out", "start over", "wipe the list", "empty the list", "clear everything", "start fresh"],
+      "es": ["limpiar", "vaciar", "resetear", "borrar todo", "vacía la lista", "limpiar todo", "empezar de nuevo"],
+      "hi": ["खाली", "साफ", "रीसेट", "खाली करो", "मेरी सूची खाली करो", "सब हटाओ", "फिर से शुरू"]
     }
   },
   "units": {
@@ -36,15 +106,16 @@
     "piece": ["piece", "pieces", "pcs", "pc", "टुकड़ा", "पीस"],
     "can": ["can", "cans", "lata", "latas"],
     "box": ["box", "boxes", "caja", "cajas"],
-    "bag": ["bag", "bags", "bolsa", "bolsas"]
+    "bag": ["bag", "bags", "bolsa", "bolsas"],
+    "loaf": ["loaf", "loaves", "barra", "barritas"]
   },
   "connectors": {
-    "en": ["of", "some", "a", "an", "the", "my", "from", "to", "list", "me", "please", "i", "for", "with"],
-    "es": ["de", "un", "una", "unos", "unas", "el", "la", "los", "las", "mi", "lista", "por", "favor", "para", "con", "quiero", "necesito"],
-    "hi": ["का", "की", "के", "मेरा", "सूची", "से", "मुझे", "कृपया", "का", "में"]
+    "en": ["of", "some", "a", "an", "the", "my", "from", "to", "list", "me", "please", "i", "for", "with", "on"],
+    "es": ["de", "un", "una", "unos", "unas", "el", "la", "los", "las", "mi", "lista", "por", "favor", "para", "con", "quiero", "necesito", "en"],
+    "hi": ["का", "की", "के", "मेरा", "मेरी", "सूची", "से", "मुझे", "कृपया", "में", "को", "पर", "के लिए", "करो", "क्या", "है"]
   },
   "priceTriggers": {
-    "en": ["under", "below", "cheaper than", "less than", "max", "maximum", "within", "budget"],
+    "en": ["under", "below", "cheaper than", "less than", "max", "maximum", "within", "budget", "for", "at"],
     "es": ["menos de", "bajo", "máximo", "hasta", "por debajo de"],
     "hi": ["से कम", "नीचे", "अधिकतम"]
   },

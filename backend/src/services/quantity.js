@@ -39,8 +39,8 @@ export function parseQuantity(text) {
 
   const lower = text.toLowerCase();
 
-  // 1) Explicit digit, optionally followed by a unit: "2 bottles", "5 kg"
-  const digitUnit = lower.match(/(\d+(?:\.\d+)?)\s*([a-z]+)?/);
+  // 1) Explicit digit, optionally followed by a unit: "2 bottles", "5 kg", "2 लीटर"
+  const digitUnit = lower.match(/(\d+(?:\.\d+)?)\s*([a-z\u0900-\u097f]+)?/);
   // 2) Word number (incl. Spanish), optionally followed by a unit: "two packs", "dos botellas"
   const wordMatch = lower.match(/\b(a|an|one|two|three|four|five|six|seven|eight|nine|ten|dozen|half|uno|un|una|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez)\b/);
 

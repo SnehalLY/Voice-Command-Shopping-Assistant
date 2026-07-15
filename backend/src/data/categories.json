@@ -1,6 +1,6 @@
 {
   "categories": {
-    "Dairy": ["milk", "cheese", "butter", "yogurt", "curd", "cream", "paneer", "ghee", "ice cream", "eggs", "egg"],
+    "Dairy": ["milk", "cheese", "butter", "yogurt", "curd", "cream", "paneer", "ghee", "eggs", "egg"],
     "Produce": ["apple", "apples", "banana", "bananas", "orange", "oranges", "mango", "mangoes", "tomato", "tomatoes", "potato", "potatoes", "onion", "onions", "lettuce", "spinach", "carrot", "carrots", "broccoli", "cucumber", "lemon", "lime", "avocado", "avocados", "ginger", "garlic", "cilantro", "mint", "strawberry", "strawberries", "grape", "grapes", "pear", "pears", "pepper", "peppers", "watermelon", "peach", "peaches", "corn", "berry", "berries", "pumpkin", "sweet potato", "cranberries", "cranberry", "pomegranate", "grapes", "eggplant", "brussels sprouts", "asparagus", "peas", "cherries", "cherry", "zucchini", "plum", "plums", "guava", "papaya", "pineapple"],
     "Bakery": ["bread", "bun", "buns", "bagel", "bagels", "croissant", "croissants", "cake", "muffin", "muffins", "pastry", "pastries", "tortilla", "toast"],
     "Beverages": ["water", "juice", "coffee", "tea", "soda", "cola", "beer", "wine", "smoothie", "lemonade", "milk shake", "shake"],
@@ -11,6 +11,19 @@
     "Household": ["soap", "detergent", "shampoo", "toilet paper", "tissue", "paper towel", "dishwasher", "cleaner", "sponge", "trash bag", "garbage bag"],
     "Personal Care": ["toothpaste", "toothbrush", "deodorant", "lotion", "razor", "face wash", "sanitizer", "mask"],
     "Pharmacy": ["medicine", "medication", "vitamin", "painkiller", "tablet", "syrup", "bandage"]
+  },
+  "hindiKeywords": {
+    "Dairy": ["दूध", "पनीर", "अंडा", "अंडे", "मक्खन", "दही", "क्रीम", "घी"],
+    "Produce": ["सेब", "केला", "टमाटर", "आलू", "प्याज", "गोभी", "बैंगन", "मूली", "गाजर", "लौकी", "तरई", "अदरक", "लहसुन", "हरी मिर्च", "नींबू", "अंबा", "अनानास", "अमरूद", "पपीता", "अंगूर", "अनार", "खरबूजा", "तरबूज", "चेरी", "प्लम", "जामुन", "बेर"],
+    "Bakery": ["ब्रेड", "रोटी", "पाव", "बेसन", "चपाती", "नान", "पेस्ट्री", "केक"],
+    "Beverages": ["पानी", "चाय", "कॉफी", "जूस", "सोडा", "शेक", "स्मूदी"],
+    "Snacks": ["चिप्स", "बिस्कुट", "कुकी", "नमकीन", "समोसा", "चॉकलेट", "मिठाई"],
+    "Meat & Seafood": ["चिकन", "मutton", "मत्स्य", "फिश", "चौमें"],
+    "Pantry": ["चावल", "आटा", "चीनी", "नमक", "तेल", "दाल", "मसाले", "अचार", "हनी", "पास्ता", "नूडल्स", "सॉस"],
+    "Frozen": ["फ्रोजन", "आइस क्रीम", "बर्फ"],
+    "Household": ["साबुन", "डिटर्जेंट", "शैम्पू", "टॉयलेट पेपर", "कपड़ा धोने का साबुन"],
+    "Personal Care": ["टूथपेस्ट", "ब्रश", "डीओडोरेंट", "लोशन", "रेजर"],
+    "Pharmacy": ["दवा", "विटामिन", "पेइनकिलर", "बैंडेज"]
   },
   "defaultCategory": "Other"
 }

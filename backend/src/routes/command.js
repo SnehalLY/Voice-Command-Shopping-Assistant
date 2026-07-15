@@ -9,11 +9,9 @@ const router = Router();
 // Body: { text: string, lang?: 'en'|'es'|'hi' }
 router.post(
   '/',
-  asyncHandler((req, res) => {
+  asyncHandler(async (req, res) => {
     const { text, lang } = req.body || {};
-    // Empty/missing text still flows through executeCommand so we return a
-    // consistent 422 "unrecognized" response instead of a 400.
-    const result = executeCommand(text || '', lang || 'en');
+    const result = await executeCommand(text || '', lang || 'en');
     const status = result.ok ? 200 : 422;
     res.status(status).json(result);
   })

@@ -7,6 +7,7 @@ import {
   clearItems,
 } from '../db.js';
 import { categorizeItem } from '../services/categorization.js';
+import { ensureImage } from '../services/image.js';
 import { asyncHandler, badRequest } from '../middleware/errorHandler.js';
 
 const router = Router();
@@ -22,8 +23,8 @@ router.get(
 // POST /api/items - add a single item (UI fallback when not using voice)
 router.post(
   '/',
-  asyncHandler((req, res) => {
-    const { name, quantity, unit, brand, maxPrice } = req.body || {};
+  asyncHandler(async (req, res) => {
+    const { name, quantity, unit, brand, maxPrice, price } = req.body || {};
     if (!name || typeof name !== 'string' || !name.trim()) {
       throw badRequest('Item name is required.', 'missing_name');
     }
@@ -34,7 +35,9 @@ router.post(
       unit: unit || null,
       brand: brand || null,
       maxPrice: Number.isFinite(maxPrice) ? maxPrice : null,
+      price: Number.isFinite(price) ? price : null,
     });
+    ensureImage(item.id, name.trim()).then((url) => { item.image_url = url; }).catch(() => {});
     res.status(201).json({ ok: true, item });
   })
 );

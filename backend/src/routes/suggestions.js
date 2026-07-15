@@ -1,18 +1,21 @@
 import { Router } from 'express';
 import { listItems, getHistory } from '../db.js';
 import {
-  getRecommendations,
+  getRunningLow,
+  getFrequentItems,
   getSeasonal,
   getSubstitutes,
 } from '../services/recommendations.js';
+import { categorizeItem } from '../services/categorization.js';
 import { asyncHandler, badRequest } from '../middleware/errorHandler.js';
 
 const router = Router();
 
-// GET /api/suggestions - combined smart suggestions for the panel:
-//   - recommendations (frequent / stale / pairings)
-//   - seasonal items for the requested (or current) month
-//   - substitutes for items already on the list
+// GET /api/suggestions - smart suggestions split by type:
+//   runningLow: interval-based reorder alerts
+//   frequentlyBought: frequency-based recommendations
+//   seasonal: in-season items
+//   substitutes: alternatives for items on the list
 router.get(
   '/',
   asyncHandler((req, res) => {
@@ -20,15 +23,25 @@ router.get(
     const items = listItems();
     const history = getHistory();
 
-    const recommendations = getRecommendations(items, history);
+    const runningLow = getRunningLow(history);
+    const frequentNames = getFrequentItems(history);
+    const frequentlyBought = frequentNames
+      .filter((name) => !items.some((i) => normalize(i.name) === normalize(name)))
+      .slice(0, 8)
+      .map((name) => ({
+        name,
+        category: categorizeItem(name),
+        reason: 'You add this often',
+        source: 'frequent',
+      }));
+
     const seasonal = getSeasonal(month);
 
-    // Suggest substitutes for items currently on the list.
     const substitutes = items
       .map((i) => ({ for: i.name, options: getSubstitutes(i.name) }))
       .filter((s) => s.options.length > 0);
 
-    res.json({ ok: true, recommendations, seasonal, substitutes });
+    res.json({ ok: true, runningLow, frequentlyBought, seasonal, substitutes });
   })
 );
 
@@ -51,5 +64,9 @@ router.get(
     res.json({ ok: true, month, seasonal: getSeasonal(month) });
   })
 );
+
+function normalize(name) {
+  return name.trim().toLowerCase();
+}
 
 export default router;
